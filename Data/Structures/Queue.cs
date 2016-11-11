@@ -5,19 +5,20 @@ namespace Data.Structures
 {
 
     /// <summary>
-    /// A generic stack
+    /// A generic queue
     /// </summary>
-    /// <typeparam name="T">The type of the elements composing the stack</typeparam>
-    public class Stack<T>
+    /// <typeparam name="T">The type of the elements composing the queue</typeparam>
+    public class Queue<T>
     {
 
-        private Node<T> top;
+        private Node<T> front;
 
         /// <summary>
-        /// Determines whether the stack is empty
+        /// Determines whether the queue is empty
         /// </summary>
         public bool IsEmpty
-        {   get
+        {
+            get
             {
                 return Count == 0;
             }
@@ -29,38 +30,40 @@ namespace Data.Structures
         public int Count { get; private set; }
 
         /// <summary>
-        /// Gets the element at the top
+        /// Gets the element at the front
         /// </summary>
-        public T Top
+        public T Front
         {
             get
             {
-                return top.Element;
+                return front.Element;
             }
         }
 
         /// <summary>
-        /// Creates an instance of <see cref="Stack{T}"/>
+        /// Creates an instance of <see cref="Queue{T}"/>
         /// </summary>
-        public Stack()
+        public Queue()
         {
             Count = 0;
-            top = default(Node<T>);
+            front = default(Node<T>);
         }
 
         /// <summary>
-        /// Adds an element to the top
+        /// Adds an element to the end
         /// </summary>
         /// <param name="element">The element to be added</param>
-        public void Push(T element)
+        public void Enqueue(T element)
         {
             Node<T> node = new Node<T>(element);
             if (IsEmpty)
-                top = node;
+                front = node;
             else
             {
-                node.Next = top;
-                top = node;
+                Node<T> back = front;
+                for (int i = 0; i < Count; i++)
+                    back = back.Next;
+                back.Next = node;
             }
             Count++;
         }
@@ -69,34 +72,34 @@ namespace Data.Structures
         /// Adds a collection of elements
         /// </summary>
         /// <param name="elements">The elements to be added</param>
-        public void PushRange(IEnumerable<T> elements)
+        public void EnqueueRange(IEnumerable<T> elements)
         {
             foreach (T element in elements)
-                Push(element);
+                Enqueue(element);
         }
 
         /// <summary>
         /// Adds a collection of elements
         /// </summary>
         /// <param name="elements">The elements to be added</param>
-        public void PushRange(IList<T> elements)
+        public void EnqueueRange(IList<T> elements)
         {
             foreach (T element in elements)
-                Push(element);
+                Enqueue(element);
         }
 
         /// <summary>
-        /// Removes the element at the top
+        /// Removes the element at the front
         /// </summary>
         /// <returns>The element removed</returns>
-        public T Pop()
+        public T Dequeue()
         {
             if (IsEmpty)
                 return default(T);
             else
             {
-                Node<T> ret = top;
-                top = top.Next;
+                Node<T> ret = front;
+                front = front.Next;
                 Count--;
                 return ret.Element;
             }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Data.Structures;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Data.Tests.Structures
 {
@@ -11,7 +12,7 @@ namespace Data.Tests.Structures
         [TestMethod]
         public void ShouldPushElement()
         {
-            Stack<int> stack = new Stack<int>();
+            Data.Structures.Stack<int> stack = new Data.Structures.Stack<int>();
             Assert.IsTrue(stack.IsEmpty);
             int element = 1;
             stack.Push(element);
@@ -19,9 +20,33 @@ namespace Data.Tests.Structures
         }
 
         [TestMethod]
+        public void ShouldPushRange_WithIEnumerable()
+        {
+            Data.Structures.Stack<int> stack = new Data.Structures.Stack<int>();
+            IEnumerable<int> elements = new List<int>()
+            {
+                1, 2, 3, 4, 5
+            };
+            stack.PushRange(elements);
+            Assert.AreEqual(elements.Count(), stack.Count);
+        }
+
+        [TestMethod]
+        public void ShouldPushRange_WithIList()
+        {
+            Data.Structures.Stack<int> stack = new Data.Structures.Stack<int>();
+            int[] elements = new int[]
+            {
+                1, 2, 3, 4, 5
+            };
+            stack.PushRange(elements);
+            Assert.AreEqual(elements.Length, stack.Count);
+        }
+
+        [TestMethod]
         public void ShouldPopElement()
         {
-            Stack<int> stack = new Stack<int>();
+            Data.Structures.Stack<int> stack = new Data.Structures.Stack<int>();
             int element = 1;
             stack.Push(element);
             int removed = stack.Pop();
@@ -32,10 +57,13 @@ namespace Data.Tests.Structures
         [TestMethod]
         public void ShouldGetTopElement()
         {
-            Stack<int> stack = new Stack<int>();
-            int element = 1;
-            stack.Push(element);
-            Assert.AreEqual(element, stack.Top);
+            Data.Structures.Stack<int> stack = new Data.Structures.Stack<int>();
+            int[] elements = new int[]
+            {
+                1, 2, 3, 4, 5
+            };
+            stack.PushRange(elements);
+            Assert.AreEqual(5, stack.Top);
         }
 
     }
