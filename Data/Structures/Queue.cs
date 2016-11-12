@@ -60,6 +60,7 @@ namespace Data.Structures
                 front = node;
             else
             {
+                // FIXME: fix Queue.Enqueue
                 Node<T> back = front;
                 for (int i = 0; i < Count; i++)
                     back = back.Next;
