@@ -89,7 +89,7 @@ namespace Data.Structures
         /// Removes the element at the top
         /// </summary>
         /// <returns>The element removed</returns>
-        public T Pop()
+        public T Popsy()
         {
             if (IsEmpty)
                 return default(T);
